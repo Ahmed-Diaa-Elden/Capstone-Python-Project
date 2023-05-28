@@ -2,6 +2,7 @@ import csv,os
 from datetime import datetime
 
 def createCSVfile(today, time):
+	# Here we are creating new CSV file
 	headers = ['ID', 'Insertion Time', 'Name', 'Address', 'Phone Number', 'Email']
 	# records = [{'id':'1', 'iTime':time, 'name': 'Bakr', 'address':'zagazig', 'pNumber':'00201020205040', 'email':'engdiaa@gmail.com'},]
 
@@ -15,6 +16,7 @@ def createCSVfile(today, time):
 		csvWriter.writerow([1, time, name, address, pNumber, email])
 
 def appendCSVfile(today, time):
+	# Here we are appending in existing CSV file
 	headers = ['ID', 'Insertion Time', 'Name', 'Address', 'Phone Number', 'Email']
 	lindex = 0
 	with open(f"./contacts/contactbook_{today}.csv",'r') as file:
@@ -29,6 +31,7 @@ def appendCSVfile(today, time):
 		csvWriter.writerow([lindex, time, name, address, pNumber, email])
 
 def createContact():
+	# Here we check if the CSV file of today exists to append data or not to create new one
 	contents = os.listdir('./contacts')
 	today = datetime.now().strftime("%d-%m-%y")
 	time = datetime.now().strftime("%H:%M:%S")
@@ -40,12 +43,13 @@ def createContact():
 	print('Contact Created Succesfully')
 
 def readCSVfile():
+	# Here we are reading today CSV file and printing it sorted in creation time or alphabetical
 	today = datetime.now().strftime("%d-%m-%y")
 	with open(f"./contacts/contactbook_{today}.csv",'r') as file:
 		csvSearch = list(csv.reader(file, delimiter=','))
 		print('*****************************************')
 		print('Choose which kind of order you prefer (please enter the number only)')
-		print('1.ID order (Creation date order)')
+		print('1.ID order (Creation time order)')
 		print('2.Alphabetical name order')
 		i = int(input())
 		while i > 3 or i < 1:
@@ -61,6 +65,7 @@ def readCSVfile():
 				print(*row, sep=" / ")
 
 def deleteContact():
+	# Here we are deleting first match contact that the user searched for
 	[today, csvSearch, rowN] = findContact()
 	if today == None:
 		return None
@@ -78,6 +83,7 @@ def deleteContact():
 	print('Contact Deleted Succesfully')
 
 def editContact():
+	# Here we are editing first match contact that the user searched for
 	[today, csvSearch, rowN] = findContact()
 	if today == None:
 		return None
@@ -99,7 +105,7 @@ def editContact():
 	print('Contact Edited Succesfully')
 
 def findContact():
-	# just editing first name but I want it dynamic for any field based on user
+	# Here we are printing first match contact that the user searched for
 	today = datetime.now().strftime("%d-%m-%y")
 	headers = ['ID', 'Insertion Time', 'Name', 'Address', 'Phone Number', 'Email']
 	eField = int(input(f"Which field do you want to search (please enter the number)\n0.ID\n1.Insertion Time\n2.Name\n3.Address\n4.Phone Number\n5.Email\n"))
@@ -129,6 +135,7 @@ def findContact():
 
 
 if __name__ == '__main__' :
+	# Here we are starting our script as infinite loop that can't break until user press exit number
 	while True:
 		print('*****************************************')
 		print('Please select what you want to do:')
